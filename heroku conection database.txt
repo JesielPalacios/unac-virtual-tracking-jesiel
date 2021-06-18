@@ -1,0 +1,37 @@
+mysql conectarse a heroku
+
+user conection
+b49b32df6c06f5
+
+password
+808d0428
+
+host
+us-cdbr-east-03.cleardb.com
+
+
+CREATE TABLE estudiante(
+    id_est INT(11) NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(35) NOT NULL,
+    phone VARCHAR(16) NOT NULL,
+    password VARCHAR(16) NOT NULL,
+    type_id VARCHAR(16) NOT NULL,
+    num_id VARCHAR(16) NOT NULL,
+    role VARCHAR(16) NOT NULL,
+    gender VARCHAR(16) NOT NULL,
+    cod_student VARCHAR (100) NOT  NULL,
+    semester VARCHAR(16) NOT NULL,
+    resetToken VARCHAR(100) NOT NULL
+
+);
+
+ALTER  TABLE estudiante
+ADD PRIMARY KEY (id);
+
+ALTER TABLE estudiante
+MODIFY id_est INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
+DESCRIBE estudiante;
+
+use heroku_8287ccc07a63f77

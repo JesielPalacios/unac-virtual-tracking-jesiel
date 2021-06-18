@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Arquitectura de software",
+        "semester": "7",
+        "credits": "3"
+    },
+    {
+        "id": 2,
+        "name": "Arquitectura de computadores",
+        "semester": "6",
+        "credits": "4"
+    },
+    {
+
+    }
+]
