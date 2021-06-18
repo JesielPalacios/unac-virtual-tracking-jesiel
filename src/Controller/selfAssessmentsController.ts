@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { SelfAssessment } from '../entity/SelfAssessments';
+import { Selfassessments } from '../entity/Selfassessments';
+import { validate } from 'class-validator';
 
 export class selfAssessmentsController {
 
   static getAllSelfAssessments = async (req: Request, res: Response) => {
-    const selfAssessmentRepository = getRepository(SelfAssessment);
+    const selfAssessmentRepository = getRepository(Selfassessments);
     let selfAssessment;
 
     try {
@@ -21,9 +22,9 @@ export class selfAssessmentsController {
     }
   };
 
-  static getSubcjectById = async (req: Request, res: Response) => {
+  static getAssessmentById = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const selfAssessmentRepository = getRepository(SelfAssessment);
+    const selfAssessmentRepository = getRepository(Selfassessments);
     try {
       const selfAssessment = await selfAssessmentRepository.findOneOrFail(id);
       res.send(selfAssessment);
@@ -32,33 +33,30 @@ export class selfAssessmentsController {
     }
   };
 
+  static createNewSelfAssessment = async (req: Request, res: Response) => {
+    const { id, name, nota } = req.body;
+    const selfAssessment = new Selfassessments();
+    selfAssessment.id = id;
+    selfAssessment.name = name;
+    selfAssessment.nota = nota;
 
-  // static createNewSubjet = async (req: Request, res: Response) => {
-  //   const { id, name, credits, semester } = req.body;
-  //   const selfAssessment = new SelfAssessment();
-  //   selfAssessment.id = id;
-  //   selfAssessment.name = name;
-  //   selfAssessment.credits = credits;
-  //   selfAssessment.semester = semester;
+    const validationOpt = { validationError: { target: false, value: false } };
+    const errors = await validate(selfAssessment, validationOpt);
+    if (errors.length > 0) {
+      return res.status(400).json(errors);
+    }
 
+    const selfAssessmentRepository = getRepository(Selfassessments);
 
-  //   const validationOpt = { validationError: { target: false, value: false } };
-  //   const errors = await validate(selfAssessment, validationOpt);
-  //   if (errors.length > 0) {
-  //     return res.status(400).json(errors);
-  //   }
-
-  //   const selfAssessmentRepository = getRepository(SelfAssessment);
-
-  //   try {
-  //     await selfAssessmentRepository.save(selfAssessment);
-  //   } catch (e) {
-  //     return res.status(409).json({ message: 'SelfAssessment already exist.' });
-  //   }
+    try {
+      await selfAssessmentRepository.save(selfAssessment);
+    } catch (e) {
+      return res.status(409).json({ message: 'SelfAssessment already exist.' });
+    }
 
 
-  //   res.send('SelfAssessment created.');
-  // };
+    res.send('SelfAssessment created.');
+  };
 
   // static editSelfAssessment = async (req: Request, res: Response) => {
   //   const { id } = req.params;

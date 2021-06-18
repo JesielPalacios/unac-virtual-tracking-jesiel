@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Unique, Column } from 'typeorm';
-import { MinLength, MaxLength, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 @Entity()
 @Unique(['name'])
 @Unique(['id'])
-export class SelfAssessment {
+export class Selfassessments {
   @PrimaryGeneratedColumn()
   id: number;
 
